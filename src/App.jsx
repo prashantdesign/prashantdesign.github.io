@@ -14,14 +14,23 @@ import {
   getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken 
 } from 'firebase/auth';
 
-// --- Firebase Configuration ---
-const firebaseConfig = JSON.parse(window.__firebase_config || '{}');
+// --- Final Firebase Configuration ---
+const firebaseConfig = {
+  apiKey: "AIzaSyB8qrmuUk7VWyhv1qN1BqTbQ1X6pZGvIWw",
+  authDomain: "prashantdesign-b09d3.firebaseapp.com",
+  projectId: "prashantdesign-b09d3",
+  storageBucket: "prashantdesign-b09d3.firebasestorage.app",
+  messagingSenderId: "733759526222",
+  appId: "1:733759526222:web:af654cefcdf5d28caaba1f",
+  measurementId: "G-ZMM8TJ6E8R"
+};
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const appId = window.__app_id || 'prashant-graphic-pro-final';
+const appId = 'prashant-graphic-pro-v9'; // Unique identifier for your Firestore collections
 
-// --- Software Icons (Refined SVGs) ---
+// --- Software Icons (Actual SVGs) ---
 const SoftwareIcons = {
   Photoshop: () => (
     <svg viewBox="0 0 256 256" className="w-10 h-10">
@@ -58,7 +67,6 @@ const SoftwareIcons = {
   )
 };
 
-// --- Admin Component ---
 const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateProfile, onAddCategory, onDeleteCategory, onExit }) => {
   const [activeTab, setActiveTab] = useState('gallery');
   const [bulkIds, setBulkIds] = useState('');
@@ -84,15 +92,15 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-white uppercase leading-none font-heading">PK Admin Panel</h2>
-            <p className="text-gray-500 text-xs mt-3 uppercase tracking-widest">Global Identity Console</p>
+            <p className="text-gray-500 text-xs mt-3 uppercase tracking-widest font-bold">Identity Orchestration</p>
           </div>
-          <button onClick={onExit} className="bg-white text-black px-8 py-3 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm shadow-xl">Close Terminal</button>
+          <button onClick={onExit} className="bg-white text-black px-8 py-3 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm shadow-xl">Close terminal</button>
         </div>
 
         <div className="flex gap-2 mb-12 overflow-x-auto no-scrollbar pb-2">
           {['gallery', 'categories', 'profile'].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)} className={`px-8 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all border shrink-0 ${activeTab === tab ? 'bg-[#6366F1] text-white border-[#6366F1]' : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'}`}>
-              {tab === 'gallery' ? 'Work Archive' : tab === 'categories' ? 'Market Segments' : 'Identity Settings'}
+              {tab === 'gallery' ? 'Portfolio Archive' : tab === 'categories' ? 'Market Segments' : 'Core Identity'}
             </button>
           ))}
         </div>
@@ -101,27 +109,33 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="bg-white/[0.02] border border-white/5 p-10 rounded-[2.5rem]">
               <h3 className="text-xl font-bold mb-8 text-white flex items-center gap-3 font-heading"><PlusCircle size={20} className="text-[#6366F1]" /> Import Ad Designs</h3>
-              <textarea className="w-full bg-black/40 border border-white/10 p-6 rounded-3xl outline-none focus:border-[#6366F1] transition-all min-h-[180px] font-mono text-sm mb-8 placeholder:text-gray-800" placeholder="Paste IDs separated by lines..." value={bulkIds} onChange={(e) => setBulkIds(e.target.value)} />
+              <textarea 
+                className="w-full bg-black/40 border border-white/10 p-6 rounded-3xl outline-none focus:border-[#6366F1] transition-all min-h-[180px] font-mono text-sm mb-8 placeholder:text-gray-800"
+                placeholder="Paste IDs separated by new lines..."
+                value={bulkIds}
+                onChange={(e) => setBulkIds(e.target.value)}
+              />
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Target Category</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest">Select Target Segment</label>
                   <select className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={imgCat} onChange={(e) => setImgCat(e.target.value)}>
                     {categories.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div className="flex items-end">
-                  <button onClick={handleBulkUpload} disabled={isUploading || !bulkIds.trim()} className="w-full bg-[#6366F1] text-white font-bold py-5 rounded-2xl hover:bg-[#4F46E5] disabled:opacity-30 transition-all flex justify-center items-center gap-3 shadow-xl shadow-[#6366F1]/10">
-                    {isUploading ? <Loader2 size={20} className="animate-spin" /> : 'Sync to Portfolio'}
+                  <button onClick={handleBulkUpload} disabled={isUploading || !bulkIds.trim()} className="w-full bg-[#6366F1] text-white font-bold py-5 rounded-2xl hover:bg-[#4F46E5] disabled:opacity-30 transition-all flex justify-center items-center gap-3 shadow-xl">
+                    {isUploading ? <Loader2 size={20} className="animate-spin" /> : 'Sync to Gallery'}
                   </button>
                 </div>
               </div>
             </div>
+            
             <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
               {items.map(item => (
                 <div key={item.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-white/5 bg-white/5">
                   <img src={`https://lh3.googleusercontent.com/d/${item.driveId}`} className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity" alt="" />
                   <div className="absolute inset-0 bg-red-600/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => onDelete(item.id)} className="p-2 text-white"><Trash2 size={22} /></button>
+                    <button onClick={() => onDelete(item.id)} className="p-2 text-white hover:scale-110 transition-transform"><Trash2 size={22} /></button>
                   </div>
                 </div>
               ))}
@@ -132,9 +146,9 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
         {activeTab === 'categories' && (
           <div className="max-w-xl animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="bg-white/[0.02] border border-white/5 p-10 rounded-[2.5rem] mb-10">
-              <h3 className="text-xl font-bold mb-8 text-white flex items-center gap-3 font-heading"><Tags size={20} className="text-[#6366F1]" /> Identity Segments</h3>
+              <h3 className="text-xl font-bold mb-8 text-white flex items-center gap-3 font-heading"><Tags size={20} className="text-[#6366F1]" /> Identify Niches</h3>
               <div className="flex gap-4">
-                <input className="flex-1 bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" placeholder="Segment Name" value={newCat} onChange={(e) => setNewCat(e.target.value)} />
+                <input className="flex-1 bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" placeholder="e.g. Social Media Ads" value={newCat} onChange={(e) => setNewCat(e.target.value)} />
                 <button onClick={() => { if(newCat) onAddCategory(newCat); setNewCat(''); }} className="bg-white text-black px-10 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm">Add</button>
               </div>
             </div>
@@ -155,30 +169,30 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
               <h3 className="text-2xl font-bold text-white flex items-center gap-4 uppercase tracking-tighter font-heading"><User size={24} className="text-[#6366F1]" /> Profile Synthesis</h3>
               <div className="grid md:grid-cols-2 gap-10">
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">My Public Name</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Full Name</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" value={profData.name || ''} onChange={(e) => setProfData({...profData, name: e.target.value})} />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Hero Portrait (PNG ID)</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Portrait PNG ID</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" value={profData.heroId || ''} onChange={(e) => setProfData({...profData, heroId: e.target.value})} />
                 </div>
               </div>
               <div className="space-y-3">
-                <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Value Proposition</label>
+                <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Business Headline</label>
                 <textarea className="w-full bg-black border border-white/10 p-5 rounded-3xl h-32 outline-none focus:border-[#6366F1] text-sm" value={profData.headline || ''} onChange={(e) => setProfData({...profData, headline: e.target.value})} />
               </div>
               <div className="grid md:grid-cols-2 gap-10">
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">WhatsApp</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">WhatsApp (+91...)</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.whatsapp || ''} onChange={(e) => setProfData({...profData, whatsapp: e.target.value})} />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Business Email</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Email</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.email || ''} onChange={(e) => setProfData({...profData, email: e.target.value})} />
                 </div>
               </div>
               <button onClick={() => onUpdateProfile(profData)} className="w-full bg-[#6366F1] text-white py-6 rounded-3xl font-bold text-lg flex justify-center items-center gap-4 hover:bg-[#4F46E5] shadow-2xl transition-all">
-                <Save size={22} /> Deploy All Changes
+                <Save size={22} /> Save Global changes
               </button>
             </div>
           </div>
@@ -197,6 +211,7 @@ export default function App() {
   const [authModal, setAuthModal] = useState(false);
   const [passcode, setPasscode] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
   const [profile, setProfile] = useState({
     name: "PRASHANT KUMAR",
@@ -206,7 +221,7 @@ export default function App() {
     whatsapp: "917425081270"
   });
   
-  // --- Secret Path Handler ---
+  // --- Secret Admin Access Logic ---
   useEffect(() => {
     const handleUrl = () => { if (window.location.hash.includes('pkadmin')) setAuthModal(true); };
     window.addEventListener('hashchange', handleUrl);
@@ -216,18 +231,23 @@ export default function App() {
     window.addEventListener('keydown', handleKeys);
 
     const initAuth = async () => {
-      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-        await signInWithCustomToken(auth, __initial_auth_token);
-      } else {
-        await signInAnonymously(auth);
-      }
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+      } catch (err) { console.error("Identity Verification Failed:", err); }
     };
     initAuth();
-    const unsub = onAuthStateChanged(auth, setUser);
+    const unsub = onAuthStateChanged(auth, (u) => {
+        setUser(u);
+        if (u) setIsLoading(false);
+    });
     return () => { unsub(); window.removeEventListener('keydown', handleKeys); window.removeEventListener('hashchange', handleUrl); };
   }, []);
 
-  // --- Data Streams ---
+  // --- Real-time Data Listeners ---
   useEffect(() => {
     if (!user) return;
     const observer = new IntersectionObserver((entries) => {
@@ -251,6 +271,15 @@ export default function App() {
   }, [user]);
 
   const filteredItems = useMemo(() => activeFilter === 'All' ? items : items.filter(i => i.category === activeFilter), [items, activeFilter]);
+
+  if (isLoading && !window.location.hash.includes('pkadmin')) {
+    return (
+        <div className="min-h-screen bg-[#02050A] flex flex-col items-center justify-center text-white space-y-6">
+            <Loader2 className="animate-spin text-[#6366F1]" size={64} />
+            <p className="text-[10px] uppercase tracking-[0.6em] font-bold opacity-40">Synchronizing Identity</p>
+        </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#02050A] text-[#F1F5F9] font-sans selection:bg-[#6366F1] selection:text-white overflow-x-hidden">
@@ -305,7 +334,7 @@ export default function App() {
       <nav className="fixed top-0 w-full z-[100] nav-glass px-6 py-6 md:px-12 transition-all flex justify-between items-center">
         <div className="flex flex-col group cursor-default">
           <span className="text-2xl font-heading font-black tracking-tighter uppercase leading-none text-white group-hover:text-[#6366F1] transition-colors">{profile.name}</span>
-          <span className="text-[9px] uppercase tracking-[0.6em] text-gray-600 font-bold mt-2 ml-0.5">Design Professional</span>
+          <span className="text-[9px] uppercase tracking-[0.6em] text-gray-600 font-bold mt-2 ml-0.5">Professional Designer</span>
         </div>
 
         <div className="hidden md:flex items-center gap-12 text-shadow-sm">
@@ -339,7 +368,7 @@ export default function App() {
           <div className="animate-box reveal">
             <div className="flex items-center gap-4 mb-8">
               <div className="h-[2px] w-12 bg-[#6366F1]" />
-              <span className="text-[11px] uppercase font-bold tracking-[0.4em] text-[#6366F1]">Visual Identity Specialist</span>
+              <span className="text-[11px] uppercase font-bold tracking-[0.4em] text-[#6366F1]">Graphic Identity Expert</span>
             </div>
             <h1 className="text-[clamp(4.5rem,10.5vw,13.5rem)] font-heading font-black text-white mb-12 uppercase leading-[0.82] tracking-tighter">
               Performance <br />
@@ -347,7 +376,7 @@ export default function App() {
               <span className="text-[#6366F1] italic font-light">Graphic Designer.</span>
             </h1>
             <p className="text-gray-400 text-lg md:text-2xl max-w-xl leading-relaxed mb-16 font-light">
-              {profile.headline}
+              {profile.headline} Crafting global narratives using the world's most powerful creative suites.
             </p>
             <div className="flex flex-wrap gap-8 items-center">
               <a href="#work" className="bg-white text-black px-14 py-7 rounded-[2rem] font-bold flex items-center gap-4 hover:bg-[#6366F1] hover:text-white transition-all shadow-2xl shadow-white/5">
@@ -378,10 +407,10 @@ export default function App() {
       <section id="expertise" className="py-48 px-6 md:px-12 bg-[#060810] border-y border-white/5">
         <div className="max-w-screen-2xl mx-auto grid lg:grid-cols-3 gap-24 items-start">
           <div className="animate-box">
-            <span className="text-[10px] uppercase font-bold tracking-[0.5em] text-[#6366F1] mb-8 block font-bold">Tool Arsenal</span>
+            <span className="text-[10px] uppercase font-bold tracking-[0.5em] text-[#6366F1] mb-8 block uppercase font-bold">Tool Arsenal</span>
             <h2 className="text-5xl md:text-8xl font-heading font-black mb-10 text-white tracking-tighter uppercase leading-[0.9]">Design <br/>Mastery.</h2>
             <p className="text-gray-500 leading-relaxed text-xl font-light mb-20">
-              Leveraging the world's most powerful software to define the visual identities for premium international brands.
+              Leveraging the world's most powerful software to define visual identities for premium international brands.
             </p>
             
             <div className="grid grid-cols-2 gap-4">
@@ -401,7 +430,7 @@ export default function App() {
 
           <div className="lg:col-span-2 grid md:grid-cols-2 gap-10">
             {[
-              { icon: ShoppingBag, title: 'Ad Creative', desc: 'Direct-response visual ad imagery engineered for peak engagement and conversion on digital platforms.' },
+              { icon: ShoppingBag, title: 'Ad Creative', desc: 'Performance-led visual ad imagery engineered for peak engagement and conversion on digital platforms.' },
               { icon: Monitor, title: 'Social Systems', desc: 'Consistent brand narratives across Instagram, Facebook, and LinkedIn globally.' },
               { icon: PenTool, title: 'Brand Identity', desc: 'Cohesive visual languages through advanced typography and color direction.' },
               { icon: Zap, title: 'Scaling Efficiency', desc: 'Producing massive asset variations at the speed of the modern global market.' }
@@ -477,14 +506,14 @@ export default function App() {
       {/* Secret Auth Modal */}
       {authModal && (
         <div className="fixed inset-0 z-[1000] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-6 text-center">
-          <div className="bg-[#0F1218] p-16 md:p-28 rounded-[5rem] border border-white/10 max-lg w-full shadow-2xl animate-in zoom-in-95 duration-300">
+          <div className="bg-[#0F1218] p-16 md:p-28 rounded-[5rem] border border-white/10 max-w-lg w-full shadow-2xl animate-in zoom-in-95 duration-300">
             <div className="flex justify-between items-center mb-14">
               <h3 className="text-3xl font-heading font-bold uppercase tracking-tight text-white">Access Key</h3>
               <button onClick={() => setAuthModal(false)} className="text-white hover:rotate-90 transition-transform"><X size={40}/></button>
             </div>
             <form onSubmit={(e) => { e.preventDefault(); if (passcode === 'DESIGN2026') { setView('admin'); setAuthModal(false); setPasscode(''); } }}>
               <input autoFocus type="password" placeholder="••••" className="w-full bg-black border border-white/10 p-10 rounded-3xl text-center text-6xl tracking-[0.8em] text-white outline-none focus:border-[#6366F1] transition-all" value={passcode} onChange={e => setPasscode(e.target.value)} />
-              <button type="submit" className="w-full bg-[#6366F1] text-white py-8 rounded-3xl font-bold text-3xl mt-14 shadow-xl">Authorize Profile</button>
+              <button type="submit" className="w-full bg-[#6366F1] text-white py-8 rounded-3xl font-bold text-3xl mt-14 shadow-xl">Authorize Identity</button>
             </form>
           </div>
         </div>
