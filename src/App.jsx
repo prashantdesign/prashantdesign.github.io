@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  ShoppingBag, Target, ArrowUpRight, Linkedin, Mail, 
+  ShoppingBag, Target, ArrowUpRight, Linkedin, Mail, Instagram,
   Trash2, Sparkles, Menu, X, PlusCircle, Zap, User, Tags, 
   Image as ImageIcon, Save, Loader2, Monitor, PenTool, MessageCircle,
   Palette, Component, MousePointer2, Layers
@@ -30,7 +30,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const appId = 'prashant-graphic-pro-final';
 
-// --- Software Icons (Professional SVGs) ---
+// --- Software Icons (Refined SVGs) ---
 const SoftwareIcons = {
   Photoshop: () => (
     <svg viewBox="0 0 256 256" className="w-10 h-10">
@@ -148,7 +148,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
             <div className="bg-white/[0.02] border border-white/5 p-10 rounded-[2.5rem] mb-10">
               <h3 className="text-xl font-bold mb-8 text-white flex items-center gap-3 font-heading"><Tags size={20} className="text-[#6366F1]" /> Identify Niches</h3>
               <div className="flex gap-4">
-                <input className="flex-1 bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" placeholder="e.g. Social Media Ads" value={newCat} onChange={(e) => setNewCat(e.target.value)} />
+                <input className="flex-1 bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" placeholder="Segment Name" value={newCat} onChange={(e) => setNewCat(e.target.value)} />
                 <button onClick={() => { if(newCat) onAddCategory(newCat); setNewCat(''); }} className="bg-white text-black px-10 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm">Add</button>
               </div>
             </div>
@@ -187,7 +187,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.whatsapp || ''} onChange={(e) => setProfData({...profData, whatsapp: e.target.value})} />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Email</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Business Email</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.email || ''} onChange={(e) => setProfData({...profData, email: e.target.value})} />
                 </div>
               </div>
@@ -483,7 +483,7 @@ export default function App() {
       <section id="contact" className="py-48 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="animate-box bg-white text-black rounded-[5rem] md:rounded-[9rem] py-48 md:py-64 px-12 text-center relative overflow-hidden group shadow-[0_50px_100px_rgba(0,0,0,0.6)]">
           <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, #6366F1 2px, transparent 0)', backgroundSize: '40px 40px'}} />
-          <span className="text-[11px] uppercase font-bold tracking-[1em] text-gray-400 mb-14 block uppercase">Available Worldwide</span>
+          <span className="text-[11px] uppercase font-bold tracking-[1em] text-gray-400 mb-14 block uppercase text-shadow-sm">Available Worldwide</span>
           <h2 className="text-[clamp(4.5rem,11.5vw,18rem)] font-heading font-black mb-24 tracking-tighter uppercase leading-[0.8] text-[#02050A]">Connect.</h2>
           <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
             <a href={`mailto:${profile.email}`} className="bg-[#02050A] text-white px-20 py-8 rounded-[2.5rem] font-bold text-xl flex items-center gap-8 hover:scale-105 transition-all shadow-2xl shadow-black/20">
