@@ -14,7 +14,7 @@ import {
   getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken 
 } from 'firebase/auth';
 
-// --- Final Firebase Configuration ---
+// --- Final Firebase Configuration (Verified) ---
 const firebaseConfig = {
   apiKey: "AIzaSyB8qrmuUk7VWyhv1qN1BqTbQ1X6pZGvIWw",
   authDomain: "prashantdesign-b09d3.firebaseapp.com",
@@ -91,7 +91,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
       <div className="max-w-6xl mx-auto bg-[#0F1218] border border-white/10 rounded-[3rem] p-6 md:p-14 shadow-2xl animate-in fade-in zoom-in-95 duration-300">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-white uppercase leading-none font-heading">PK Admin Panel</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-white uppercase leading-none font-heading text-shadow-lg">PK Admin Panel</h2>
             <p className="text-gray-500 text-xs mt-3 uppercase tracking-widest font-bold">Identity Orchestration</p>
           </div>
           <button onClick={onExit} className="bg-white text-black px-8 py-3 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm shadow-xl">Close terminal</button>
@@ -187,12 +187,12 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.whatsapp || ''} onChange={(e) => setProfData({...profData, whatsapp: e.target.value})} />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Business Email</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Email</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.email || ''} onChange={(e) => setProfData({...profData, email: e.target.value})} />
                 </div>
               </div>
               <button onClick={() => onUpdateProfile(profData)} className="w-full bg-[#6366F1] text-white py-6 rounded-3xl font-bold text-lg flex justify-center items-center gap-4 hover:bg-[#4F46E5] shadow-2xl transition-all">
-                <Save size={22} /> Deploy All Changes
+                <Save size={22} /> Save Global changes
               </button>
             </div>
           </div>
@@ -328,6 +328,9 @@ export default function App() {
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .text-shadow-lg { text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .text-shadow-sm { text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
       `}} />
 
       {/* Nav */}
@@ -370,13 +373,13 @@ export default function App() {
               <div className="h-[2px] w-12 bg-[#6366F1]" />
               <span className="text-[11px] uppercase font-bold tracking-[0.4em] text-[#6366F1]">Visual Identity Specialist</span>
             </div>
-            <h1 className="text-[clamp(4.5rem,10.5vw,13.5rem)] font-heading font-black text-white mb-12 uppercase leading-[0.82] tracking-tighter">
+            <h1 className="text-[clamp(4.5rem,10.5vw,13.5rem)] font-heading font-black text-white mb-12 uppercase leading-[0.82] tracking-tighter text-shadow-lg">
               Performance <br />
               Creative <br />
               <span className="text-[#6366F1] italic font-light">Graphic Designer.</span>
             </h1>
             <p className="text-gray-400 text-lg md:text-2xl max-w-xl leading-relaxed mb-16 font-light">
-              {profile.headline} Crafting global narratives using the world's most powerful creative suites.
+              {profile.headline}
             </p>
             <div className="flex flex-wrap gap-8 items-center">
               <a href="#work" className="bg-white text-black px-14 py-7 rounded-[2rem] font-bold flex items-center gap-4 hover:bg-[#6366F1] hover:text-white transition-all shadow-2xl shadow-white/5">
@@ -470,7 +473,7 @@ export default function App() {
           {filteredItems.length === 0 && (
             <div className="col-span-full py-64 text-center border-2 border-dashed border-white/5 rounded-[6rem] opacity-20">
               <Sparkles size={100} className="mx-auto mb-10" />
-              <p className="font-heading italic text-4xl tracking-tighter uppercase font-bold">Synchronizing Portfolio...</p>
+              <p className="font-heading italic text-4xl tracking-tighter uppercase font-bold text-shadow-sm">Synchronizing Portfolio...</p>
             </div>
           )}
         </div>
