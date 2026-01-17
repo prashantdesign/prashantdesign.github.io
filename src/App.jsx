@@ -21,7 +21,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const appId = window.__app_id || 'prashant-graphic-pro-final';
 
-// --- Software Icons (Actual SVGs) ---
+// --- Software Icons (Refined SVGs) ---
 const SoftwareIcons = {
   Photoshop: () => (
     <svg viewBox="0 0 256 256" className="w-10 h-10">
@@ -83,20 +83,16 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
       <div className="max-w-6xl mx-auto bg-[#0F1218] border border-white/10 rounded-[3rem] p-6 md:p-14 shadow-2xl animate-in fade-in zoom-in-95 duration-300">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-white uppercase leading-none">PK Admin Panel</h2>
-            <p className="text-gray-500 text-xs mt-3 uppercase tracking-widest">Identity Orchestration</p>
+            <h2 className="text-3xl font-bold tracking-tight text-white uppercase leading-none font-heading">PK Admin Panel</h2>
+            <p className="text-gray-500 text-xs mt-3 uppercase tracking-widest">Global Identity Console</p>
           </div>
           <button onClick={onExit} className="bg-white text-black px-8 py-3 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm shadow-xl">Close Terminal</button>
         </div>
 
         <div className="flex gap-2 mb-12 overflow-x-auto no-scrollbar pb-2">
           {['gallery', 'categories', 'profile'].map(tab => (
-            <button 
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-8 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all border shrink-0 ${activeTab === tab ? 'bg-[#6366F1] text-white border-[#6366F1]' : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'}`}
-            >
-              {tab === 'gallery' ? 'Portfolio' : tab === 'categories' ? 'Segments' : 'Settings'}
+            <button key={tab} onClick={() => setActiveTab(tab)} className={`px-8 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all border shrink-0 ${activeTab === tab ? 'bg-[#6366F1] text-white border-[#6366F1]' : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'}`}>
+              {tab === 'gallery' ? 'Work Archive' : tab === 'categories' ? 'Market Segments' : 'Identity Settings'}
             </button>
           ))}
         </div>
@@ -105,27 +101,21 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="bg-white/[0.02] border border-white/5 p-10 rounded-[2.5rem]">
               <h3 className="text-xl font-bold mb-8 text-white flex items-center gap-3 font-heading"><PlusCircle size={20} className="text-[#6366F1]" /> Import Ad Designs</h3>
-              <textarea 
-                className="w-full bg-black/40 border border-white/10 p-6 rounded-3xl outline-none focus:border-[#6366F1] transition-all min-h-[180px] font-mono text-sm mb-8 placeholder:text-gray-800"
-                placeholder="Paste IDs separated by lines..."
-                value={bulkIds}
-                onChange={(e) => setBulkIds(e.target.value)}
-              />
+              <textarea className="w-full bg-black/40 border border-white/10 p-6 rounded-3xl outline-none focus:border-[#6366F1] transition-all min-h-[180px] font-mono text-sm mb-8 placeholder:text-gray-800" placeholder="Paste IDs separated by lines..." value={bulkIds} onChange={(e) => setBulkIds(e.target.value)} />
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest">Select Category</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Target Category</label>
                   <select className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={imgCat} onChange={(e) => setImgCat(e.target.value)}>
                     {categories.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div className="flex items-end">
-                  <button onClick={handleBulkUpload} disabled={isUploading || !bulkIds.trim()} className="w-full bg-[#6366F1] text-white font-bold py-5 rounded-2xl hover:bg-[#4F46E5] disabled:opacity-30 transition-all flex justify-center items-center gap-3 shadow-xl">
+                  <button onClick={handleBulkUpload} disabled={isUploading || !bulkIds.trim()} className="w-full bg-[#6366F1] text-white font-bold py-5 rounded-2xl hover:bg-[#4F46E5] disabled:opacity-30 transition-all flex justify-center items-center gap-3 shadow-xl shadow-[#6366F1]/10">
                     {isUploading ? <Loader2 size={20} className="animate-spin" /> : 'Sync to Portfolio'}
                   </button>
                 </div>
               </div>
             </div>
-            
             <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
               {items.map(item => (
                 <div key={item.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-white/5 bg-white/5">
@@ -144,7 +134,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
             <div className="bg-white/[0.02] border border-white/5 p-10 rounded-[2.5rem] mb-10">
               <h3 className="text-xl font-bold mb-8 text-white flex items-center gap-3 font-heading"><Tags size={20} className="text-[#6366F1]" /> Identity Segments</h3>
               <div className="flex gap-4">
-                <input className="flex-1 bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" placeholder="e.g. Social Media Ads" value={newCat} onChange={(e) => setNewCat(e.target.value)} />
+                <input className="flex-1 bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" placeholder="Segment Name" value={newCat} onChange={(e) => setNewCat(e.target.value)} />
                 <button onClick={() => { if(newCat) onAddCategory(newCat); setNewCat(''); }} className="bg-white text-black px-10 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm">Add</button>
               </div>
             </div>
@@ -161,7 +151,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
 
         {activeTab === 'profile' && (
           <div className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="bg-white/[0.02] border border-white/5 p-12 rounded-[3rem] space-y-12">
+            <div className="bg-white/[0.02] border border-white/5 p-12 rounded-[3rem] space-y-10">
               <h3 className="text-2xl font-bold text-white flex items-center gap-4 uppercase tracking-tighter font-heading"><User size={24} className="text-[#6366F1]" /> Profile Synthesis</h3>
               <div className="grid md:grid-cols-2 gap-10">
                 <div className="space-y-3">
@@ -169,12 +159,12 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" value={profData.name || ''} onChange={(e) => setProfData({...profData, name: e.target.value})} />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Portrait PNG ID</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Hero Portrait (PNG ID)</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-[#6366F1] text-sm" value={profData.heroId || ''} onChange={(e) => setProfData({...profData, heroId: e.target.value})} />
                 </div>
               </div>
               <div className="space-y-3">
-                <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Business Headline</label>
+                <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Value Proposition</label>
                 <textarea className="w-full bg-black border border-white/10 p-5 rounded-3xl h-32 outline-none focus:border-[#6366F1] text-sm" value={profData.headline || ''} onChange={(e) => setProfData({...profData, headline: e.target.value})} />
               </div>
               <div className="grid md:grid-cols-2 gap-10">
@@ -188,7 +178,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
                 </div>
               </div>
               <button onClick={() => onUpdateProfile(profData)} className="w-full bg-[#6366F1] text-white py-6 rounded-3xl font-bold text-lg flex justify-center items-center gap-4 hover:bg-[#4F46E5] shadow-2xl transition-all">
-                <Save size={22} /> Save Global changes
+                <Save size={22} /> Deploy All Changes
               </button>
             </div>
           </div>
@@ -203,6 +193,11 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [authModal, setAuthModal] = useState(false);
+  const [passcode, setPasscode] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const [profile, setProfile] = useState({
     name: "PRASHANT KUMAR",
     headline: "Creative Graphic Designer specializing in high-impact visual ad creatives and brand identity. Expert in Photoshop, Figma, Canva, and InDesign.",
@@ -211,12 +206,7 @@ export default function App() {
     whatsapp: "917425081270"
   });
   
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [authModal, setAuthModal] = useState(false);
-  const [passcode, setPasscode] = useState('');
-
-  // --- Secret Admin Access Logic ---
+  // --- Secret Path Handler ---
   useEffect(() => {
     const handleUrl = () => { if (window.location.hash.includes('pkadmin')) setAuthModal(true); };
     window.addEventListener('hashchange', handleUrl);
@@ -237,7 +227,7 @@ export default function App() {
     return () => { unsub(); window.removeEventListener('keydown', handleKeys); window.removeEventListener('hashchange', handleUrl); };
   }, []);
 
-  // --- Real-time Data Listeners ---
+  // --- Data Streams ---
   useEffect(() => {
     if (!user) return;
     const observer = new IntersectionObserver((entries) => {
@@ -268,6 +258,7 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
         :root { font-family: 'Plus Jakarta Sans', sans-serif; }
         h1, h2, h3, h4, .font-heading { font-family: 'Outfit', sans-serif; }
+        .hero-title { letter-spacing: -0.06em; line-height: 0.82; }
         
         .animate-box { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .animate-box.reveal { opacity: 1; transform: translateY(0); }
@@ -296,9 +287,7 @@ export default function App() {
             opacity: 0;
             transition: all 0.7s ease;
             pointer-events: none;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            left: 50%; top: 50%; transform: translate(-50%, -50%);
         }
         .hero-container:hover .hero-glow {
             opacity: 1;
@@ -319,7 +308,7 @@ export default function App() {
           <span className="text-[9px] uppercase tracking-[0.6em] text-gray-600 font-bold mt-2 ml-0.5">Design Professional</span>
         </div>
 
-        <div className="hidden md:flex items-center gap-12">
+        <div className="hidden md:flex items-center gap-12 text-shadow-sm">
           {['Expertise', 'Work', 'Connect'].map(link => (
             <a key={link} href={`#${link.toLowerCase()}`} className="text-[10px] uppercase font-bold tracking-[0.2em] text-gray-400 hover:text-white transition-colors">{link}</a>
           ))}
@@ -361,7 +350,7 @@ export default function App() {
               {profile.headline}
             </p>
             <div className="flex flex-wrap gap-8 items-center">
-              <a href="#work" className="bg-white text-black px-14 py-7 rounded-[2rem] font-bold flex items-center gap-4 hover:bg-[#6366F1] hover:text-white transition-all shadow-2xl">
+              <a href="#work" className="bg-white text-black px-14 py-7 rounded-[2rem] font-bold flex items-center gap-4 hover:bg-[#6366F1] hover:text-white transition-all shadow-2xl shadow-white/5">
                 View Archive <ArrowUpRight size={24} />
               </a>
               <div className="flex items-center gap-6 px-4">
@@ -389,7 +378,7 @@ export default function App() {
       <section id="expertise" className="py-48 px-6 md:px-12 bg-[#060810] border-y border-white/5">
         <div className="max-w-screen-2xl mx-auto grid lg:grid-cols-3 gap-24 items-start">
           <div className="animate-box">
-            <span className="text-[10px] uppercase font-bold tracking-[0.5em] text-[#6366F1] mb-8 block">Tool Arsenal</span>
+            <span className="text-[10px] uppercase font-bold tracking-[0.5em] text-[#6366F1] mb-8 block font-bold">Tool Arsenal</span>
             <h2 className="text-5xl md:text-8xl font-heading font-black mb-10 text-white tracking-tighter uppercase leading-[0.9]">Design <br/>Mastery.</h2>
             <p className="text-gray-500 leading-relaxed text-xl font-light mb-20">
               Leveraging the world's most powerful software to define the visual identities for premium international brands.
@@ -488,14 +477,14 @@ export default function App() {
       {/* Secret Auth Modal */}
       {authModal && (
         <div className="fixed inset-0 z-[1000] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-6 text-center">
-          <div className="bg-[#0F1218] p-16 md:p-28 rounded-[5rem] border border-white/10 max-w-lg w-full shadow-2xl animate-in zoom-in-95 duration-300">
+          <div className="bg-[#0F1218] p-16 md:p-28 rounded-[5rem] border border-white/10 max-lg w-full shadow-2xl animate-in zoom-in-95 duration-300">
             <div className="flex justify-between items-center mb-14">
               <h3 className="text-3xl font-heading font-bold uppercase tracking-tight text-white">Access Key</h3>
               <button onClick={() => setAuthModal(false)} className="text-white hover:rotate-90 transition-transform"><X size={40}/></button>
             </div>
             <form onSubmit={(e) => { e.preventDefault(); if (passcode === 'DESIGN2026') { setView('admin'); setAuthModal(false); setPasscode(''); } }}>
               <input autoFocus type="password" placeholder="••••" className="w-full bg-black border border-white/10 p-10 rounded-3xl text-center text-6xl tracking-[0.8em] text-white outline-none focus:border-[#6366F1] transition-all" value={passcode} onChange={e => setPasscode(e.target.value)} />
-              <button type="submit" className="w-full bg-[#6366F1] text-white py-8 rounded-3xl font-bold text-3xl mt-14 shadow-xl">Authorize Identity</button>
+              <button type="submit" className="w-full bg-[#6366F1] text-white py-8 rounded-3xl font-bold text-3xl mt-14 shadow-xl">Authorize Profile</button>
             </form>
           </div>
         </div>
