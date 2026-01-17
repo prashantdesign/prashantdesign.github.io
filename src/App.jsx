@@ -28,9 +28,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const appId = 'prashant-graphic-pro-v9'; // Unique identifier for your Firestore collections
+const appId = 'prashant-graphic-pro-final';
 
-// --- Software Icons (Actual SVGs) ---
+// --- Software Icons (Refined SVGs) ---
 const SoftwareIcons = {
   Photoshop: () => (
     <svg viewBox="0 0 256 256" className="w-10 h-10">
@@ -183,7 +183,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
               </div>
               <div className="grid md:grid-cols-2 gap-10">
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">WhatsApp (+91...)</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">WhatsApp</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.whatsapp || ''} onChange={(e) => setProfData({...profData, whatsapp: e.target.value})} />
                 </div>
                 <div className="space-y-3">
@@ -192,7 +192,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
                 </div>
               </div>
               <button onClick={() => onUpdateProfile(profData)} className="w-full bg-[#6366F1] text-white py-6 rounded-3xl font-bold text-lg flex justify-center items-center gap-4 hover:bg-[#4F46E5] shadow-2xl transition-all">
-                <Save size={22} /> Save Global changes
+                <Save size={22} /> Deploy All Changes
               </button>
             </div>
           </div>
@@ -334,7 +334,7 @@ export default function App() {
       <nav className="fixed top-0 w-full z-[100] nav-glass px-6 py-6 md:px-12 transition-all flex justify-between items-center">
         <div className="flex flex-col group cursor-default">
           <span className="text-2xl font-heading font-black tracking-tighter uppercase leading-none text-white group-hover:text-[#6366F1] transition-colors">{profile.name}</span>
-          <span className="text-[9px] uppercase tracking-[0.6em] text-gray-600 font-bold mt-2 ml-0.5">Professional Designer</span>
+          <span className="text-[9px] uppercase tracking-[0.6em] text-gray-600 font-bold mt-2 ml-0.5">Design Professional</span>
         </div>
 
         <div className="hidden md:flex items-center gap-12 text-shadow-sm">
@@ -368,7 +368,7 @@ export default function App() {
           <div className="animate-box reveal">
             <div className="flex items-center gap-4 mb-8">
               <div className="h-[2px] w-12 bg-[#6366F1]" />
-              <span className="text-[11px] uppercase font-bold tracking-[0.4em] text-[#6366F1]">Graphic Identity Expert</span>
+              <span className="text-[11px] uppercase font-bold tracking-[0.4em] text-[#6366F1]">Visual Identity Specialist</span>
             </div>
             <h1 className="text-[clamp(4.5rem,10.5vw,13.5rem)] font-heading font-black text-white mb-12 uppercase leading-[0.82] tracking-tighter">
               Performance <br />
@@ -410,7 +410,7 @@ export default function App() {
             <span className="text-[10px] uppercase font-bold tracking-[0.5em] text-[#6366F1] mb-8 block uppercase font-bold">Tool Arsenal</span>
             <h2 className="text-5xl md:text-8xl font-heading font-black mb-10 text-white tracking-tighter uppercase leading-[0.9]">Design <br/>Mastery.</h2>
             <p className="text-gray-500 leading-relaxed text-xl font-light mb-20">
-              Leveraging the world's most powerful software to define visual identities for premium international brands.
+              Leveraging the world's most powerful software to define the visual identities for premium international brands.
             </p>
             
             <div className="grid grid-cols-2 gap-4">
