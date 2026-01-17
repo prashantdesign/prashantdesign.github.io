@@ -30,7 +30,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const appId = 'prashant-graphic-pro-final';
 
-// --- Software Icons (Refined SVGs) ---
+// --- Software Icons (Professional SVGs) ---
 const SoftwareIcons = {
   Photoshop: () => (
     <svg viewBox="0 0 256 256" className="w-10 h-10">
@@ -100,7 +100,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
         <div className="flex gap-2 mb-12 overflow-x-auto no-scrollbar pb-2">
           {['gallery', 'categories', 'profile'].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)} className={`px-8 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all border shrink-0 ${activeTab === tab ? 'bg-[#6366F1] text-white border-[#6366F1]' : 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10'}`}>
-              {tab === 'gallery' ? 'Portfolio Archive' : tab === 'categories' ? 'Market Segments' : 'Core Identity'}
+              {tab === 'gallery' ? 'Portfolio' : tab === 'categories' ? 'Market Segments' : 'Core Identity'}
             </button>
           ))}
         </div>
@@ -187,7 +187,7 @@ const AdminDashboard = ({ items, categories, profile, onAdd, onDelete, onUpdateP
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.whatsapp || ''} onChange={(e) => setProfData({...profData, whatsapp: e.target.value})} />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Email</label>
+                  <label className="text-[10px] uppercase font-bold text-gray-500 tracking-widest ml-1">Business Email</label>
                   <input className="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none text-sm" value={profData.email || ''} onChange={(e) => setProfData({...profData, email: e.target.value})} />
                 </div>
               </div>
@@ -257,15 +257,15 @@ export default function App() {
     const unsubGallery = onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'gallery')), (snap) => {
       setItems(snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0)));
       setTimeout(() => document.querySelectorAll('.animate-box').forEach(el => observer.observe(el)), 500);
-    });
+    }, (err) => console.error("Gallery Sync Failure:", err));
 
     const unsubCats = onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'categories')), (snap) => {
       setCategories(snap.docs.map(d => d.data().name));
-    });
+    }, (err) => console.error("Category Sync Failure:", err));
 
     const unsubProfile = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'profile', 'main'), (snap) => {
       if (snap.exists()) setProfile(snap.data());
-    });
+    }, (err) => console.error("Profile Sync Failure:", err));
 
     return () => { unsubGallery(); unsubCats(); unsubProfile(); };
   }, [user]);
